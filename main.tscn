@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://dkiwypfukdcjq"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_fy1eo"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_i05gv"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_5m4y5"]
+normal = Vector2(1, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_d1y56"]
+a = Vector2(-50, 0)
+b = Vector2(50, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_nhkje"]
+a = Vector2(50, 0)
+b = Vector2(0, 50)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_iwce8"]
+a = Vector2(0, 50)
+b = Vector2(-50, 0)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_fy1eo")
+
+[node name="WorldBound" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBound"]
+position = Vector2(0, 320)
+shape = SubResource("WorldBoundaryShape2D_i05gv")
+
+[node name="WorldBoundL" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundL"]
+position = Vector2(0, 100)
+shape = SubResource("WorldBoundaryShape2D_5m4y5")
+
+[node name="lines" type="RigidBody2D" parent="."]
+position = Vector2(442, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="lines"]
+shape = SubResource("SegmentShape2D_d1y56")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="lines"]
+shape = SubResource("SegmentShape2D_nhkje")
+
+[node name="Line2D" type="Line2D" parent="lines"]
+points = PackedVector2Array(-50, 0, 50, 0, 0, 50)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="lines"]
+shape = SubResource("SegmentShape2D_iwce8")
+
+[node name="colpolygon" type="RigidBody2D" parent="."]
+position = Vector2(591, 5)
+
+[node name="Line2D" type="Line2D" parent="colpolygon"]
+points = PackedVector2Array(-50, 0, 50, 0, 50, 50)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="colpolygon"]
+polygon = PackedVector2Array(-50, 0, 50, 0, 50, 50)
