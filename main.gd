@@ -21,25 +21,29 @@ func _unhandled_input(event):
 		print("mouse pressed at %s" % click_pos)
 		match event.button_index:
 			MOUSE_BUTTON_LEFT:
-				print("left to add")
+				#print("left to add")
 				get_viewport().set_input_as_handled()
 				user_input_pts.append(click_pos) # add a point
 				
+				# check if the user still has "ink" available
 				if user_input_pts.size() < MAX_POINTS: # still have capacity:
 					if user_input_pts.size() >= 2:
-						print("Last two points are %s and %s" % [user_input_pts[-2], user_input_pts[-1]])
-						pass # TODO draw a line2d for user_input_pts[-2] and [-1]
+						var last_two_pts : PackedVector2Array = [user_input_pts[-2], user_input_pts[-1]]
+						print("Last two points are %s" % last_two_pts)
+						
+						# draw a line2d for user_input_pts[-2] and [-1]
+						draw_temp_lines(last_two_pts)
+						
 				else: # maxed out, draw the damn thing and clear
 					print("maxed out! draw now")
 					draw_shape(user_input_pts)
-					user_input_pts = []
+					clean_temp_lines()
 			MOUSE_BUTTON_RIGHT:
-				print("right to draw")
+				#print("right to draw")
 				get_viewport().set_input_as_handled()
 				user_input_pts.append(click_pos) # add a point
-				
 				draw_shape(user_input_pts)
-				user_input_pts = []
+				clean_temp_lines()
 
 func draw_shape(pts_array : PackedVector2Array) -> void:
 	'''Takes in an array of points, draws a shape with collision and gravity'''
@@ -91,7 +95,16 @@ func draw_shape(pts_array : PackedVector2Array) -> void:
 		
 	add_child(r) # create the rigidbody2D
 
-func paint():
-	
-	pass
+func clean_temp_lines() -> void:
+	'''Removes all temp lines during drawing phase'''
+	user_input_pts = []
+	print(get_tree().get_nodes_in_group("DrawingLines"))
+	for line : Line2D in get_tree().get_nodes_in_group("DrawingLines"):
+		line.queue_free()
 
+func draw_temp_lines(last_two_pts : PackedVector2Array):
+	var latest_line : Line2D = Line2D.new()
+	latest_line.set_points(last_two_pts)
+	latest_line.width = 1
+	latest_line.add_to_group("DrawingLines") # will be cleaned when drawing the actual shape
+	add_child(latest_line)
