@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkiwypfukdcjq"]
+[gd_scene load_steps=6 format=3 uid="uid://dkiwypfukdcjq"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_fy1eo"]
+[ext_resource type="PackedScene" uid="uid://kxoq610ta78r" path="res://level_1.tscn" id="2_i8ba8"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_i05gv"]
 
@@ -33,14 +34,7 @@ shape = SubResource("WorldBoundaryShape2D_5m4y5")
 position = Vector2(640, 100)
 shape = SubResource("WorldBoundaryShape2D_qiney")
 
-[node name="Btns" type="Control" parent="."]
-process_mode = 3
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="BtnCleanAllShapes" type="Button" parent="Btns"]
+[node name="BtnCleanAllShapes" type="Button" parent="."]
 offset_left = 592.0
 offset_top = 8.0
 offset_right = 633.0
@@ -48,7 +42,7 @@ offset_bottom = 33.0
 theme_override_font_sizes/font_size = 12
 text = "Reset"
 
-[node name="BtnLevel1" type="Button" parent="Btns"]
+[node name="BtnLevel1" type="Button" parent="."]
 offset_left = 344.0
 offset_top = 8.0
 offset_right = 393.0
@@ -57,7 +51,7 @@ theme_override_font_sizes/font_size = 12
 text = "Level 1
 "
 
-[node name="BtnLevel2" type="Button" parent="Btns"]
+[node name="BtnLevel2" type="Button" parent="."]
 offset_left = 408.0
 offset_top = 8.0
 offset_right = 457.0
@@ -65,7 +59,7 @@ offset_bottom = 33.0
 theme_override_font_sizes/font_size = 12
 text = "Level 2"
 
-[node name="BtnLevel3" type="Button" parent="Btns"]
+[node name="BtnLevel3" type="Button" parent="."]
 offset_left = 472.0
 offset_top = 8.0
 offset_right = 521.0
@@ -74,6 +68,7 @@ theme_override_font_sizes/font_size = 12
 text = "Level 3
 "
 
-[connection signal="button_up" from="Btns/BtnCleanAllShapes" to="." method="_on_btn_clean_all_shapes_button_up"]
-[connection signal="button_up" from="Btns/BtnLevel1" to="." method="_on_btn_level_1_button_up"]
-[connection signal="button_up" from="Btns/BtnLevel2" to="." method="_on_btn_level_2_button_up"]
+[node name="Level1" parent="." instance=ExtResource("2_i8ba8")]
+
+[connection signal="button_up" from="BtnCleanAllShapes" to="." method="_on_btn_clean_all_shapes_button_up"]
+[connection signal="button_up" from="BtnLevel1" to="." method="_on_btn_level_1_button_up"]

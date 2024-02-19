@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://kxoq610ta78r"]
+
+[ext_resource type="Texture2D" uid="uid://b10e6yg1rtupj" path="res://icon.svg" id="1_be83o"]
+[ext_resource type="Script" path="res://level_1.gd" id="1_e882d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_abj2n"]
+radius = 24.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_24s74"]
+size = Vector2(72, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7pmb"]
+size = Vector2(88, 8)
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_e882d")
+
+[node name="Ball" type="RigidBody2D" parent="."]
+position = Vector2(96, 88)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+position = Vector2(-9.53674e-07, -24)
+scale = Vector2(0.3125, 0.3125)
+texture = ExtResource("1_be83o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+position = Vector2(0, -24)
+shape = SubResource("CircleShape2D_abj2n")
+
+[node name="EndZone" type="Area2D" parent="."]
+position = Vector2(-304, 104)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndZone"]
+position = Vector2(476, 104)
+shape = SubResource("RectangleShape2D_24s74")
+
+[node name="ColorRect" type="ColorRect" parent="EndZone"]
+offset_left = 440.0
+offset_top = 72.0
+offset_right = 512.0
+offset_bottom = 136.0
+color = Color(0.576471, 1, 1, 0.52549)
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(24, -24)
+rotation = 0.191986
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Obstacles/StaticBody2D"]
+offset_left = 24.0
+offset_top = 104.0
+offset_right = 112.0
+offset_bottom = 112.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/StaticBody2D"]
+position = Vector2(68, 108)
+shape = SubResource("RectangleShape2D_u7pmb")
+
+[connection signal="body_entered" from="EndZone" to="." method="_on_end_zone_body_entered"]
